@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5.20.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-c08b59e7b22d06798ad002029fb6569a"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "Direzione_Effetto", "scale": {"domain": ["Aumenta lo Score Medaglie", "Riduce lo Score Medaglie"], "range": ["#009E73", "#D55E00"]}, "title": "Direzione dell'effetto", "type": "nominal"}, "tooltip": [{"field": "Feature", "type": "nominal"}, {"field": "Importanza", "format": ".3f", "type": "quantitative"}, {"field": "Corr_Feature_SHAP", "format": ".3f", "title": "Correlazione feature-SHAP", "type": "quantitative"}, {"field": "Direzione_Effetto", "title": "Direzione", "type": "nominal"}], "x": {"field": "Importanza", "title": "Importanza della Feature (Random Forest)", "type": "quantitative"}, "y": {"field": "Feature", "sort": "-x", "title": null, "type": "nominal"}}, "height": 320, "title": "Importanza delle Feature \u2014 verde: feature alta aumenta lo score, arancione: lo riduce", "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-c08b59e7b22d06798ad002029fb6569a": [{"Feature": "Score_Medaglie_Lag1_model", "Importanza": 0.6948463944902482, "Corr_Feature_SHAP": 0.8247925867182847, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "Score_Medaglie_MediaMobile3_model", "Importanza": 0.12347970576940479, "Corr_Feature_SHAP": 0.5474578921290426, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "PIL_Log", "Importanza": 0.04814975816084687, "Corr_Feature_SHAP": 0.8176362891632051, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "Aspettativa_di_Vita", "Importanza": 0.02290345843654707, "Corr_Feature_SHAP": 0.6863483105734295, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "Iscrizioni_Scuola_Primaria_perc", "Importanza": 0.02052399167907326, "Corr_Feature_SHAP": 0.4427393355385587, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "Popolazione_Urbana", "Importanza": 0.01823147101578806, "Corr_Feature_SHAP": 0.6018246464886458, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "Anno", "Importanza": 0.017917942614560093, "Corr_Feature_SHAP": -0.19055380165038271, "Direzione_Effetto": "Riduce lo Score Medaglie"}, {"Feature": "PIL_x_Pop", "Importanza": 0.01758238660874648, "Corr_Feature_SHAP": 0.8341338107297926, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "Pop_Log", "Importanza": 0.01503534418999864, "Corr_Feature_SHAP": 0.4117674031022627, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "PIL_ProCapite_Log", "Importanza": 0.01485042433830064, "Corr_Feature_SHAP": 0.42798007741843225, "Direzione_Effetto": "Aumenta lo Score Medaglie"}, {"Feature": "Ha_Storico_Precedente", "Importanza": 0.0064791226964858025, "Corr_Feature_SHAP": -0.8315666500384374, "Direzione_Effetto": "Riduce lo Score Medaglie"}, {"Feature": "Host", "Importanza": 0.0, "Corr_Feature_SHAP": null, "Direzione_Effetto": "Riduce lo Score Medaglie"}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+---
+canonical: https://beit87.github.io/g6-2026-website/pil_storico_boicottaggi
+meta-author:
+meta-copyright:
+meta-description: PIL, storico e boicottaggi - cosa spiega (e cosa non spiega) il medagliere olimpico
+meta-keywords:
+meta-msapplication-TileColor: #333333
+meta-msapplication-config: /g6-2026-website/assets/favicon/browserconfig.xml
+meta-og:description: PIL, storico e boicottaggi - cosa spiega (e cosa non spiega) il medagliere olimpico
+meta-og:image: https://summerschool2025.sobigdata.eu/assets/images/poggio.jpg
+meta-og:locale: en-US
+meta-og:site_name: Non solo Giochi | i fattori socio-economici dietro il successo olimpico
+meta-og:title: PIL, storico e boicottaggi | Non solo Giochi
+meta-og:type: website
+meta-og:url: https://beit87.github.io/g6-2026-website/pil_storico_boicottaggi
+meta-robots: index, follow
+meta-theme-color: #333333
+meta-thumbnail:
+meta-twitter:card: summary_large_image
+meta-viewport: width=device-width, initial-scale=1, shrink-to-fit=no
+title: PIL, storico e boicottaggi | Non solo Giochi
+---
+
+# PIL, storico e boicottaggi: cosa spiega (e cosa non spiega) il medagliere olimpico
+
+Tre famiglie di nazioni olimpiche, un modello che prevede il medagliere, e cosa succede quando la politica entra nei dati
+
+**Ogni medaglia ha una storia economica alle spalle — ma non solo.** Questa analisi parte dalla stessa domanda del progetto: quanto contano PIL e popolazione nel determinare quante medaglie vince un paese? La risposta è "molto, ma non nel modo in cui te lo aspetti": il fattore più predittivo di tutti non è la ricchezza di un paese, ma **quanto ha già vinto quattro anni prima**. E quando il modello sbaglia di più, spesso non è colpa sua: sono eventi storici — i boicottaggi olimpici del 1980 e del 1984 — a spiegare le sorprese più grandi.
+
+## Tre famiglie di nazioni olimpiche
+
+Con una tecnica di clustering (K-Means) i 220 paesi del dataset, osservati in ciascuna delle 15 edizioni dal 1964 al 2020, si raggruppano naturalmente in tre profili socio-economici molto riconoscibili:
+
+<div style="position: relative; width: 100%; height: 320px; margin: 1.5rem 0;">
+<canvas id="clusterChart" role="img" aria-label="Grafico a bolle dei tre cluster di nazioni olimpiche. Asse orizzontale: PIL medio in miliardi di dollari, scala logaritmica. Asse verticale: punteggio medaglie medio. Dimensione della bolla: numero di osservazioni. Grandi Potenze Olimpiche: PIL 494 miliardi, punteggio 20.4, 863 osservazioni. Economie Emergenti: PIL 6.8 miliardi, punteggio 1.6, 1062 osservazioni. Nazioni Minori: PIL 2.1 miliardi, punteggio 0.1, 694 osservazioni.">I tre cluster: Grandi Potenze Olimpiche (PIL 494 mld, punteggio medaglie 20.4), Economie Emergenti (PIL 6.8 mld, punteggio 1.6), Nazioni Minori (PIL 2.1 mld, punteggio 0.1).</canvas>
+</div>
+<div style="font-size: 12px; color: #666; margin-bottom: 1.5rem;">Ogni bolla è un cluster di coppie nazione-edizione. La dimensione della bolla è proporzionale al numero di osservazioni nel gruppo. Asse orizzontale in scala logaritmica, perché il PIL delle Grandi Potenze è centinaia di volte più grande di quello delle Nazioni Minori.</div>
+
+- **Le Grandi Potenze Olimpiche** — PIL alto e popolazione ampia (USA, Cina, Germania, Francia, Italia, Australia, ma anche India, Brasile ed Egitto per pura scala economica e demografica). Dominano il medagliere in modo sistematico: possono permettersi infrastrutture sportive su larga scala e hanno un ampio bacino di atleti tra cui scegliere.
+- **Le Economie Emergenti** — grandi popolazioni ma reddito pro capite basso. Il potenziale demografico c'è, ma raramente si trasforma in medaglie per mancanza di investimenti strutturati. È il gruppo più interessante: al suo interno si nascondono le storie di maggiore efficienza, come vedremo tra poco.
+- **Le Nazioni Minori** — spesso benestanti a livello individuale (pensiamo a Islanda o Lussemburgo), ma con una popolazione troppo piccola per costruire un sistema sportivo competitivo su più discipline.
+
+Il messaggio di fondo: **i dati non dividono il mondo in "ricchi che vincono" e "poveri che perdono".** Dividono il mondo in sistemi sportivi con le risorse per competere su larga scala, e sistemi che devono fare di più con meno — e alcuni, come vedremo, ci riescono benissimo.
+
+## Un modello che prova a prevedere il medagliere
+
+Con un modello di Random Forest — un algoritmo che impara da migliaia di combinazioni storiche di PIL, popolazione e altri indicatori — è possibile stimare quante medaglie un paese vincerà in una data edizione. Il modello spiega circa il **68% della variabilità** dei risultati: un buon punto di partenza, ma lascia intenzionalmente scoperto un 32% che è proprio la parte più interessante da raccontare (ci arriviamo tra poco).
+
+La sorpresa più grande non è quanto il modello riesce a prevedere, ma *cosa* usa per farlo. Ci si aspetterebbe che il PIL sia il fattore principale. Invece, il singolo indicatore più importante — con un peso di quasi il **70%** su tutti gli altri messi insieme — è semplicemente **quante medaglie lo stesso paese aveva vinto nell'edizione precedente**.
+
+<div style="position: relative; width: 100%; height: 240px; margin: 1.5rem 0;">
+<canvas id="importanceChart" role="img" aria-label="Grafico a barre orizzontali dell'importanza delle variabili nel modello predittivo. Medaglie edizione precedente: 69.5%. Media medaglie ultime tre edizioni: 12.3%. PIL: 4.9%. Tutte le altre variabili insieme: 13.3%.">Importanza delle variabili: medaglie edizione precedente 69.5%, media ultime 3 edizioni 12.3%, PIL 4.9%, altre variabili 13.3%.</canvas>
+</div>
+
+Il PIL conta ancora, ma soprattutto nel lungo periodo: apre la porta al potenziale, mentre è lo storico recente a decidere chi la attraversa davvero. I sistemi sportivi nazionali, insomma, cambiano lentissimamente: infrastrutture, allenatori e federazioni non si costruiscono (né si smontano) in quattro anni.
+
+## Quando il modello sbaglia, spesso è la storia a spiegarlo
+
+Qui entra la parte più curiosa dell'analisi. Guardando dove il modello sbaglia di più — le nazioni che vincono molto più o molto meno di quanto le loro risorse economiche farebbero pensare — emergono due tipi di storie molto diverse.
+
+**Storie di efficienza vera.** Alcuni paesi convertono risorse limitate in risultati sproporzionati: Kenya ed Etiopia nell'atletica, la Giamaica nello sprint, Cuba nel pugilato. La spiegazione più plausibile — coerente con quello che si legge nella letteratura sportiva, anche se i nostri dati non permettono di dimostrarlo in modo diretto — è la specializzazione estrema in poche discipline ad alta resa, invece di provare a competere su tutti i fronti.
+
+**Storie di politica, non di sport.** E poi ci sono i casi più estremi in assoluto, che raccontano tutt'altro. Il modello prevede circa **52 medaglie per la Bulgaria nel 1984** e **46 per il Giappone nel 1980** — sulla carta, paesi con le risorse per arrivare a quei numeri. Nella realtà, entrambi i paesi tornarono a casa **a zero medaglie**. Non per un crollo improvviso del loro sistema sportivo, ma perché semplicemente **non parteciparono**: il 1980 e il 1984 sono le due edizioni dei boicottaggi incrociati della Guerra Fredda (Mosca 1980, boicottata dagli USA e alleati; Los Angeles 1984, boicottata dall'URSS e blocco sovietico).
+
+Lo stesso fenomeno si vede, in modo speculare, nel grafico qui sotto: la correlazione tra PIL e medaglie, che in quasi tutte le edizioni resta sopra 0,8, crolla a **0,13 esattamente nel 1980** — l'unico anno in cui la politica, non l'economia, ha deciso chi era sul podio.
+
+<div style="position: relative; width: 100%; height: 320px; margin: 1.5rem 0;">
+<canvas id="corrChart" role="img" aria-label="Grafico a linee della correlazione tra PIL e medaglie olimpiche per ogni edizione dal 1964 al 2020. La correlazione resta sopra 0.8 in quasi tutte le edizioni tranne il 1980, dove crolla a 0.13 a causa del boicottaggio di Mosca.">Correlazione PIL-medaglie per edizione: 1964: 0.91, 1968: 0.97, 1972: 0.91, 1976: 0.96, 1980: 0.13, 1984: 0.96, 1988: 0.83, 1992: 0.66, 1996: 0.72, 2000: 0.65, 2004: 0.73, 2008: 0.78, 2012: 0.85, 2016: 0.89, 2020: 0.86</canvas>
+</div>
+<div style="font-size: 12px; color: #666; margin-bottom: 1.5rem;">Ogni punto è un'edizione olimpica estiva. Il punto rosso segna il crollo del 1980, quando decine di paesi boicottarono i Giochi di Mosca.</div>
+
+Un modello economico, per definizione, non può sapere che una squadra è rimasta a casa per un embargo diplomatico. È uno dei limiti più onesti e più interessanti di tutta l'analisi.
+
+## Cosa manca ancora
+
+Due estensioni renderebbero il quadro più completo. La prima: il numero di atleti inviati da ogni paese, che permetterebbe di calcolare un vero "rendimento per atleta" invece di doverlo dedurre indirettamente. La seconda, emersa proprio da questa analisi: un indicatore esplicito di boicottaggio/non partecipazione, che eviterebbe di scambiare un evento politico per un fallimento sportivo.
+
+## In sintesi
+
+Il PIL apre le porte al potenziale olimpico di lungo periodo. Lo storico recente decide chi lo attiva davvero, edizione dopo edizione. E quando i numeri non tornano, a volte la spiegazione non è nei dati economici — è nei libri di storia.
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function() {
+  var clusterCtx = document.getElementById('clusterChart');
+  new Chart(clusterCtx, {
+    type: 'bubble',
+    data: {
+      datasets: [
+        {
+          label: 'Grandi Potenze Olimpiche (N=863)',
+          data: [{ x: 494, y: 20.4, r: 29 }],
+          backgroundColor: 'rgba(42,120,214,0.6)',
+          borderColor: '#2a78d6'
+        },
+        {
+          label: 'Economie Emergenti (N=1062)',
+          data: [{ x: 6.8, y: 1.6, r: 33 }],
+          backgroundColor: 'rgba(235,104,52,0.6)',
+          borderColor: '#eb6834'
+        },
+        {
+          label: 'Nazioni Minori (N=694)',
+          data: [{ x: 2.1, y: 0.1, r: 26 }],
+          backgroundColor: 'rgba(27,175,122,0.6)',
+          borderColor: '#1baf7a'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: 20 },
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return ctx.dataset.label + ': PIL medio ' + ctx.parsed.x + ' mld USD, punteggio medaglie ' + ctx.parsed.y;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'logarithmic',
+          title: { display: true, text: 'PIL medio (miliardi USD, scala log)' },
+          grid: { color: '#e1e0d9' }
+        },
+        y: {
+          title: { display: true, text: 'Punteggio medaglie medio' },
+          grid: { color: '#e1e0d9' }
+        }
+      }
+    }
+  });
+
+  var impCtx = document.getElementById('importanceChart');
+  new Chart(impCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Medaglie edizione precedente', 'Media ultime 3 edizioni', 'PIL', 'Altre 9 variabili'],
+      datasets: [{
+        data: [69.5, 12.3, 4.9, 13.3],
+        backgroundColor: ['#2a78d6', '#3987e5', '#eb6834', '#898781'],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) { return ctx.parsed.x + '% di importanza'; }
+          }
+        }
+      },
+      scales: {
+        x: {
+          min: 0,
+          max: 75,
+          title: { display: true, text: 'Importanza nel modello (%)' },
+          grid: { color: '#e1e0d9' }
+        },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+
+  var labels = ['1964','1968','1972','1976','1980','1984','1988','1992','1996','2000','2004','2008','2012','2016','2020'];
+  var data = [0.91,0.97,0.91,0.96,0.13,0.96,0.83,0.66,0.72,0.65,0.73,0.78,0.85,0.89,0.86];
+  var pointColors = labels.map(function(l,i){ return i===4 ? '#e34948' : '#2a78d6'; });
+  var pointRadii = labels.map(function(l,i){ return i===4 ? 7 : 3; });
+  new Chart(document.getElementById('corrChart'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        borderColor: '#2a78d6',
+        borderWidth: 2,
+        pointBackgroundColor: pointColors,
+        pointBorderColor: pointColors,
+        pointRadius: pointRadii,
+        pointHoverRadius: 8,
+        tension: 0.3,
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return 'Correlazione: ' + ctx.parsed.y.toFixed(2) + (ctx.dataIndex === 4 ? ' — Boicottaggio di Mosca' : '');
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 1,
+          ticks: { stepSize: 0.2 },
+          grid: { color: '#e1e0d9' },
+          title: { display: true, text: 'Correlazione PIL-medaglie' }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+})();
+</script>
