@@ -1,0 +1,55 @@
+- text: |
+ <h3>La spesa élite spiega le medaglie meglio del PIL, il confronto diretto</h3>
+ <p>Il primo risultato è immediato e netto. La correlazione tra PIL totale e medaglie olimpiche vale r = 0.58, già significativa, ma lascia il 66% della varianza inspiegata. Quando sostituiamo il PIL con la <strong>spesa élite reale per il ciclo olimpico quadriennale</strong> (dati SPLISS), la correlazione sale a <strong>r = 0.847 per Tokyo 2020</strong> e <strong>r = 0.876 per Paris 2024</strong>.</p>
+ <p>Il progetto SPLISS (Sports Policy factors Leading to International Sporting Success) è il più grande studio comparativo sulle politiche sportive d'élite al mondo, sviluppato dal Prof. Veerle De Bosscher alla Vrije Universiteit Brussel. I dati misurano la spesa totale in €M per l'intero ciclo olimpico quadriennale, non solo il budget dell'anno dei Giochi, ma i quattro anni di preparazione complessiva. Per Tokyo 2020 il campione copre 14 nazioni; per Paris 2024 sono 17.</p>
+ <p>Il paese ospitante è evidenziato in rosso nel grafico: il Giappone a Tokyo e la Francia a Paris mostrano una posizione anomala rispetto alla tendenza generale, l'effetto host gonfia sia la spesa che le medaglie in modo non generalizzabile. Questo è il motivo per cui l'effetto host viene trattato separatamente.</p>
+ asset: "assets/charts/nb2_spliss_scatter.json"
+
+- text: |
+ <h3>Non tutte le medaglie costano uguale, l'efficienza della spesa</h3>
+ <p>Il costo per medaglia varia in modo impressionante tra le 14 nazioni del campione SPLISS. Il <strong>Belgio</strong> è il più efficiente con €2.8M per medaglia, risultato ottenuto concentrando i fondi su ciclismo su pista e atletica, due discipline dove il paese ha costruito una tradizione tecnica di eccellenza. All'estremo opposto, il <strong>Brasile</strong> spende circa €9M per medaglia: un sistema sportivo ancora in costruzione, con investimenti diffusi su molte discipline senza eccellenza in nessuna.</p>
+ <p>Il <strong>Giappone</strong> mostra un costo per medaglia elevato (€6.9M) per il ciclo Tokyo 2020: l'effetto host spinge la spesa verso l'alto, e parte di quell'investimento non produce medaglie direttamente ma costruisce infrastrutture che rimarranno utili per decenni. <strong>Gran Bretagna</strong> e <strong>Australia</strong> hanno un rapporto qualità-prezzo eccellente: sistemi maturi, che sanno dove investire e come convertire le sterline/dollari in podi.</p>
+ <p>Il dato più interessante è che l'efficienza non cresce linearmente con la spesa: ci sono nazioni che spendono molto e ottengono poco (Brasile), e nazioni che spendono poco e ottengono molto (Belgio, Norvegia). Il segreto è l'<em>allocazione strategica</em> delle risorse, non il volume totale.</p>
+ asset: "assets/charts/nb2_costo_medaglia.json"
+
+- text: |
+ <h3>Chi ha aumentato i fondi ha guadagnato medaglie?, Variazioni tra Tokyo e Paris</h3>
+ <p>Confrontando le 14 nazioni presenti in entrambe le edizioni SPLISS, la relazione tra variazione di spesa e variazione di medaglie è positiva con r ≈ 0.55. Non è una correlazione perfetta, esistono fattori non controllabili come infortuni di atleti chiave o breakout improvvisi, ma il segnale è consistente.</p>
+ <p>Il caso più estremo in negativo è il <strong>Giappone</strong>: ha investito circa €400M per Tokyo 2020 come paese ospitante (il più alto del campione) e ha ottenuto 58 medaglie, un risultato eccezionale. Ma a Paris 2024, senza il vantaggio di casa e con un investimento tornato ai livelli normali (€380M), le medaglie sono scese a 45. L'effetto host non è perpetuo: si genera e si consuma in un ciclo.</p>
+ <p><strong>Francia</strong> e <strong>Sud Corea</strong> mostrano invece crescite significative: entrambe hanno aumentato la spesa e migliorato il medagliere. La Francia in particolare ha investito massicciamente in vista di Paris 2024 (paese ospitante): l'aumento di spesa si vede già nel risultato (+33 medaglie rispetto a Tokyo, da 33 a 66).</p>
+ asset: "assets/charts/nb2_delta_spend.json"
+
+- text: |
+ <h3>UK Sport, sette cicli di prova per una correlazione da manuale</h3>
+ <p>Il dataset UK Sport è la fonte più preziosa e trasparente disponibile pubblicamente sul legame investimento-medaglie. Dal 2000 al 2024, il governo britannico pubblica ogni anno i finanziamenti per ogni singola disciplina olimpica, sappiamo esattamente quanto riceve il ciclismo, il canottaggio, il nuoto, la ginnastica. Su sette cicli consecutivi, la correlazione complessiva investimento → medaglie è <strong>r = 0.947</strong>, con <strong>R² = 0.90</strong>.</p>
+ <p>Il grafico mostra la storia di una trasformazione radicale. Nel 2000 (Sydney) l'UK Sport aveva £58.9M da distribuire e GB tornò a casa con 28 medaglie, un risultato già migliorato rispetto all'umiliazione di Atlanta 1996 (15 medaglie, 36° nel medagliere). Ma il salto vero avviene tra Atene 2004 e Pechino 2008: i fondi triplicano da £71M a £235M e le medaglie passano da 30 a 47. Un aumento del 231% nell'investimento produce un +57% nelle medaglie nel ciclo successivo.</p>
+ <p>La strategia UK Sport non è stata solo "dare più soldi": è stata costruire un sistema di rendicontazione rigoroso dove ogni disciplina riceve finanziamenti proporzionali alle sue prospettive di medaglie, con revisioni cicliche. Chi non produce risultati perde i fondi. È un meccanismo di selezione delle eccellenze sportive, non un contributo a pioggia.</p>
+ asset: "assets/charts/nb2_uksport.json"
+
+- text: |
+ <h3>L'efficienza cambia nel tempo, ROI crescente poi decrescente</h3>
+ <p>Il ROI di UK Sport (medaglie per £100M investiti) mostra un pattern interessante: <strong>massimo a Londra 2012</strong> (circa 24.6 medaglie per £100M) e poi in progressivo calo. Questo riflette la legge dei rendimenti decrescenti nell'investimento sportivo: i fondi iniziali vanno alle discipline con il miglior potenziale di medaglie; aggiungendo più risorse si finisce per finanziare discipline sempre più marginali con rese più basse.</p>
+ <p>Parallelamente, il <strong>costo per medaglia</strong> è aumentato da £2.1M nel 2000 a £5.4M nel 2024, quasi triplicato. Questo riflette sia l'inflazione degli stipendi dei coach d'élite, sia la crescente competizione internazionale: quando tutti i paesi investono di più, mantenersi ai vertici richiede aumenti continui di spesa per stare al passo. È una corsa agli armamenti sportivi a livello globale.</p>
+ <p>La domanda naturale è: esiste un punto di saturazione dove investire di più non produce più medaglie? I dati UK Sport suggeriscono che intorno a £300-350M per ciclo ci sia un plateau, con rendimenti marginali molto bassi per ogni sterlina aggiuntiva. A quel punto contano più la qualità dell'allocazione e la profondità del sistema che il volume totale.</p>
+ asset: "assets/charts/nb2_roi_uksport.json"
+
+- text: |
+ <h3>Qualità vs quantità, il medagliere vale quanto i suoi ori</h3>
+ <p>Il numero totale di medaglie non dice tutto sulla qualità del sistema sportivo di un paese. La <strong>percentuale di ori sul totale</strong> misura quanto spesso un paese arriva primo anziché secondo o terzo. Il grafico mette a confronto spesa élite, totale medaglie e percentuale di ori per le 14 nazioni SPLISS a Tokyo 2020.</p>
+ <p>Il <strong>Giappone</strong> (paese ospitante) ha la percentuale di ori più alta del campione: 27 ori su 58 medaglie totali (46%). Questo riflette il vantaggio di campo nelle discipline dove gareggi in casa con il pubblico che ti sostiene. <strong>Francia</strong> e <strong>Gran Bretagna</strong> mostrano una percentuale di ori intorno al 33-48%, indicativa di sistemi maturi che competono per il podio più alto, non solo per finire tra i primi tre.</p>
+ <p>Il colore dei cerchi indica il costo per oro in €M: la Francia è relativamente efficiente nell'ottenere ori rispetto alla spesa, mentre la Germania spende molto ma ottiene una percentuale di ori modesta, segnale che il sistema tedesco vince molte medaglie ma spesso di bronzo o argento, non oro.</p>
+ asset: "assets/charts/nb2_qualita_medagliere.json"
+
+- text: |
+ <h3>L'effetto lag, l'investimento di oggi produce risultati tra 4-8 anni</h3>
+ <p>Una delle intuizioni più importanti per la politica sportiva è che i risultati non arrivano immediatamente. Un atleta identificato come talento a 14-15 anni impiega tipicamente 8-12 anni per raggiungere il picco agonistico. Questo significa che l'investimento fatto <em>oggi</em> produce medaglie nel ciclo olimpico di <em>tra 4-8 anni</em>, non nel prossimo.</p>
+ <p>Lo scatter plot mostra la relazione tra l'investimento UK Sport nel ciclo t e le medaglie vinte nel ciclo t+1 (quattro anni dopo): la correlazione è <strong>r = 0.95</strong>, addirittura più alta di quella contemporanea. Questo conferma il meccanismo causale: la spesa di un ciclo costruisce atleti e infrastrutture che maturano nel ciclo successivo.</p>
+ <p>Il caso più emblematico è l'investimento di £235M fatto per Pechino 2008 che produsse 47 medaglie, ma anche, e soprattutto, creò le fondamenta per Londra 2012 (65 medaglie, il record) con l'investimento di £264M. Il sistema britannico funziona come un volano: ogni ciclo costruisce sopra il precedente.</p>
+ asset: "assets/charts/nb2_lag_uksport.json"
+
+- text: |
+ <h3>Ospitare i Giochi vale circa +16.6 medaglie, ma non è gratis</h3>
+ <p>Per ogni paese che ha ospitato le Olimpiadi estive, abbiamo calcolato il delta tra le medaglie vinte nell'anno di hosting e la propria media storica nelle altre edizioni. Il 77% dei paesi ospitanti ha migliorato i propri risultati, con un delta medio di <strong>+16.6 medaglie</strong>, un'intera posizione in più nel medagliere. Il test t-student con p = 0.004 conferma che il risultato è statisticamente significativo, non casuale.</p>
+ <p>Le cause sono multiple e si sommano. Prima dei Giochi, ogni paese ospitante aumenta sistematicamente il budget sportivo per la preparazione, è quasi una regola non scritta della politica olimpica. Durante i Giochi, il pubblico di casa genera un vantaggio misurabile in molte discipline individuali. La logistica avvantaggia gli atleti locali che non devono affrontare lunghi viaggi e sfasamenti orari.</p>
+ <p>I casi più emblematici di effetto host genuino sono <strong>Australia 2000</strong> (+31 medaglie rispetto alla propria media) e <strong>Gran Bretagna 2012</strong> (+35): entrambi i paesi avevano sistemi sportivi già maturi che si sono esaltati con il vantaggio di casa. Al contrario, il <strong>Canada 1976</strong> e gli <strong>USA 1996</strong> mostrano delta negativi, paesi che non hanno saputo o voluto capitalizzare il vantaggio dell'ospitalità.</p>
+ asset: "assets/charts/nb2_host_effect.json"

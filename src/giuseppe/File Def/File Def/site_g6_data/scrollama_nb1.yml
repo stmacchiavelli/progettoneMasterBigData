@@ -1,0 +1,74 @@
+- text: |
+ <h3>Il dataset, 3.368 osservazioni, 218 paesi, 60 anni di storia olimpica</h3>
+ <p>Il punto di partenza è un dataset costruito su misura per questa analisi: ogni riga corrisponde a un paese in una specifica edizione olimpica estiva, dal 1964 di Tokyo al 2020, sempre di Tokyo. In tutto sono 3.368 osservazioni, 218 paesi unici e 15 edizioni, arricchite ciascuna con 29 indicatori macroeconomici e demografici della World Bank.</p>
+ <p>Il dato più interessante sulla qualità dei dati è la variazione tra indicatori: mentre la <strong>popolazione</strong> è quasi completamente coperta (meno del 2% di valori mancanti), variabili come la spesa militare o il settore dei servizi mancano per oltre il 40% delle osservazioni. Le edizioni degli anni '60 e '70 e i paesi più piccoli sono quelli con le lacune maggiori, una limitazione strutturale dei dati World Bank che abbiamo gestito escludendo dalla modellazione le variabili con più del 30% di NaN.</p>
+ <p>Per questo motivo l'analisi quantitativa si concentra su sette indicatori affidabili: PIL totale, PIL pro capite, popolazione, aspettativa di vita, tasso di urbanizzazione, e le variabili olimpiche (medaglie, sede, storia).</p>
+ asset: "assets/charts/nb1_missing.json"
+
+- text: |
+ <h3>Quale indicatore spiega meglio le medaglie? La risposta in un grafico</h3>
+ <p>Calcolando la correlazione di Pearson tra ciascun indicatore e le medaglie vinte (sui soli paesi vincitori, per evitare che la massa di zeri distorca il risultato), emerge una gerarchia chiara. In cima c'è il <strong>log(PIL totale)</strong> con r = 0.58, la misura della dimensione assoluta dell'economia. Secondo viene il <strong>log(Popolazione)</strong> con r = 0.44.</p>
+ <p>Quello che stupisce è il <strong>PIL pro capite</strong>, fermo a r = 0.28. Intuitivamente sembrava il candidato più forte, un paese ricco per abitante dovrebbe poter investire di più nello sport per ogni cittadino. Ma i dati mostrano che conta la massa complessiva di risorse del sistema-paese, non la ricchezza individuale. Cina e Russia ne sono la prova più evidente: economie imponenti in termini assoluti, PIL pro capite medio per i loro standard ma medaglieri dominanti.</p>
+ <p>Lo sviluppo umano, aspettativa di vita (r = 0.22) e urbanizzazione (r = 0.22), ha un effetto positivo ma marginale rispetto alle variabili di dimensione economica.</p>
+ asset: "assets/charts/nb1_correlazioni.json"
+
+- text: |
+ <h3>PIL totale vs PIL pro capite, il confronto decisivo</h3>
+ <p>Lo scatter plot mostra in modo immediato la relazione tra PIL totale in scala logaritmica e medaglie vinte. Ogni punto è un paese-edizione; il colore indica il decennio. La linea tratteggiata è la regressione lineare che spiega circa il 34% della varianza (R² = 0.34).</p>
+ <p>La dispersione è enorme: paesi con lo stesso PIL totale possono vincere tra 0 e 30+ medaglie. Questo residuo non spiegato è la parte più interessante, nasconde le differenze di politica sportiva, di specializzazione disciplinare, di eventi geopolitici. Paesi come <strong>Cuba</strong> e <strong>Giamaica</strong> appaiono costantemente sopra la retta di regressione: vincono molte più medaglie di quanto il loro PIL suggerirebbe.</p>
+ <p>Al contrario, paesi dell'Africa subsahariana con PIL medio sono spesso sotto la retta, non perché manchino di talento atletico, ma perché mancano di infrastrutture sportive sistematiche. La distanza dalla retta è già un'indicazione di dove l'investimento sportivo diretto fa la differenza.</p>
+ asset: "assets/charts/nb1_pil_scatter.json"
+
+- text: |
+ <h3>La relazione cambia nel tempo?, Stabilità e anomalie geopolitiche</h3>
+ <p>Ricalcolando la correlazione per ogni singola edizione olimpica, emerge un quadro di relativa stabilità interrotta da due anomalie nette: <strong>1980</strong> (boicottaggio USA) e <strong>1984</strong> (boicottaggio URSS). In quegli anni la correlazione PIL-medaglie crolla perché i paesi economicamente più forti, quelli che "spingono" il coefficiente verso l'alto, sono assenti.</p>
+ <p>Il fenomeno è simmetrico: nel 1980, senza gli USA, la curva si abbassa; nel 1984, senza l'URSS, si abbassa ancora. Dal 1992 in poi (con il ritorno di tutti i paesi e la dissoluzione dell'URSS) le correlazioni tornano ai livelli degli anni '60-'70 e si stabilizzano intorno a r = 0.55-0.65 per il PIL totale e r = 0.40-0.55 per la popolazione.</p>
+ <p>Questo pattern è importante per la modellazione: qualsiasi modello che includa le edizioni 1980 e 1984 deve trattarle come outlier geopolitici, non come dati "normali" del ciclo olimpico.</p>
+ asset: "assets/charts/nb1_corr_time.json"
+
+- text: |
+ <h3>Come cambia la correlazione per decennio?</h3>
+ <p>Aggregando le correlazioni per decennio emerge un'ulteriore sfumatura: la forza predittiva del PIL totale e della popolazione non è costante, ma varia con l'evoluzione del sistema olimpico. Negli anni '60, quando pochi paesi ricchi dominavano i Giochi, le correlazioni erano alte. Negli anni '80 calano per effetto dei boicottaggi.</p>
+ <p>Il decennio 2010 mostra le correlazioni più stabili degli ultimi 30 anni: la globalizzazione del sistema olimpico ha allargato la base dei paesi competitivi, ma la dimensione economica rimane il predittore dominante. Un'eccezione notevole è la Giamaica, che pur avendo PIL ridotto mantiene correlazioni di medaglie quasi nulle con il PIL pro capite, confermando che il suo modello di successo è basato su specializzazione disciplinare, non su ricchezza.</p>
+ asset: "assets/charts/nb1_corr_decade.json"
+
+- text: |
+ <h3>Il medagliere cresce, ma non uniformemente</h3>
+ <p>Le medaglie assegnate alle Olimpiadi estive sono passate da 504 nel 1964 a 1.080 nel 2020, quasi il doppio. Ma questa crescita non è uniforme né neutrale: riflette decisioni politiche del CIO su quali sport includere, su quante categorie di peso riconoscere nella lotta o nel sollevamento pesi, su come espandere la rappresentanza femminile.</p>
+ <p>La crescita accelera negli anni '90-2000 per effetto della parità di genere progressiva nel programma olimpico. Questo significa che analizzare i totali assoluti senza normalizzare per il numero di medaglie disponibili è fuorviante: un paese che vince 40 medaglie nel 2020 su 1.080 disponibili (3.7%) è meno dominante di uno che ne vinceva 30 su 504 nel 1964 (5.9%).</p>
+ <p>Per questo motivo, nelle analisi di lungo periodo distinguiamo sempre tra medaglie assolute e quota del medagliere disponibile, una differenza che cambia significativamente la lettura delle performance storiche.</p>
+ asset: "assets/charts/nb1_medals_growth.json"
+
+- text: |
+ <h3>I boicottaggi come esperimento naturale involontario</h3>
+ <p>L'evoluzione dei cinque paesi storicamente più forti, USA, URSS/Russia, Cina, Gran Bretagna, Germania, mostra i due picchi anomali del 1980 e 1984 in modo inequivocabile. L'URSS a Mosca raggiunse <strong>195 medaglie</strong>, il suo record assoluto, con i principali rivali assenti. Gli USA a Los Angeles ottennero <strong>174 medaglie</strong> per la stessa ragione.</p>
+ <p>La Cina rappresenta invece la storia di ascesa più drammatica: da zero presenze prima del 1984 (era stata esclusa a lungo per ragioni politiche) a potenza olimpica con 88-100 medaglie nelle edizioni 2008-2020. Il picco di Pechino 2008 (100 medaglie, paese ospitante) resta il punto più alto, seguito da una stabilizzazione intorno a 70-90 che riflette il consolidamento del sistema sportivo cinese.</p>
+ <p>Gran Bretagna e Germania mostrano pattern opposti: GB in crescita costante dagli anni 2000 per effetto della riforma UK Sport, Germania in progressivo declino rispetto ai fasti dell'era della Germania Est che vinse 100+ medaglie sfruttando un sistema sportivo di stato oggi smantellato.</p>
+ asset: "assets/charts/nb1_top5.json"
+
+- text: |
+ <h3>La classifica che ribalta tutto, medaglie per milione di abitanti</h3>
+ <p>Normalizzando per la popolazione, il medagliere cambia completamente. <strong>Giamaica</strong> domina con oltre 2 medaglie per milione di abitanti, una concentrazione straordinaria dovuta quasi interamente all'atletica veloce (100m, 200m, staffette). Il modello giamaicano è uno dei più studiati in letteratura sportiva: investimento massiccio su un'unica disciplina, coaching d'élite, e un bacino genetico-culturale che produce sprinter di livello mondiale.</p>
+ <p><strong>Cuba</strong> è seconda grazie al pugilato, dove ha dominato i Giochi per decenni con un sistema di allenamento statale rigoroso. <strong>Ungheria</strong> costruisce il suo medagliere su nuoto, canoa e lotta greco-romana, tre discipline in cui la tradizione tecnica si trasmette da generazioni di coach.</p>
+ <p>Questo dato è cruciale per la politica sportiva: un paese piccolo con risorse limitate non può competere con USA o Cina su tutto il programma olimpico, ma può costruire un medagliere di tutto rispetto concentrandosi su 2-3 discipline dove ha vantaggi strutturali. È una strategia di efficienza, non di spesa.</p>
+ asset: "assets/charts/nb1_medals_per_million.json"
+
+- text: |
+ <h3>Chi vince più o meno di quanto il PIL prevede?</h3>
+ <p>Una delle analisi più rivelatrici è calcolare per ogni paese il residuo rispetto alla regressione PIL-medaglie: quante medaglie vince in più o in meno rispetto a quello che il suo PIL suggerirebbe? I paesi con residuo positivo sistematico sovraperformano il loro PIL; quelli con residuo negativo sottoperformano.</p>
+ <p><strong>Cuba</strong> è il caso più estremo di sovraperformance: dato il suo PIL, non dovrebbe vincere quasi nulla. Invece ha costruito un sistema sportivo élite tra i più efficienti al mondo. <strong>Giamaica</strong> e <strong>Kenya</strong> seguono per le stesse ragioni, specializzazione e investimento mirato in poche discipline.</p>
+ <p>Sul lato opposto, paesi con grandi economie ma sistemi sportivi non sviluppati (alcune nazioni del Golfo, per esempio) sottoperformano sistematicamente. Il residuo negativo è il segnale che il PIL da solo non si traduce automaticamente in medaglie, serve un sistema sportivo che lo converta.</p>
+ asset: "assets/charts/nb1_overperformers.json"
+
+- text: |
+ <h3>Il medagliere storico, la distribuzione geografica</h3>
+ <p>Guardando i 20 paesi con più medaglie totali dal 1964 al 2020, la geografia del successo olimpico è fortemente concentrata: Europa e Americhe dominano per storia e per PIL. <strong>USA</strong> (1.506 medaglie), <strong>URSS/Russia</strong> (738) e <strong>Germania</strong> (466) guidano. Ma la Cina (636, solo dal 1984) è già al terzo posto assoluto, e con la crescita degli ultimi vent'anni potrebbe superare l'URSS entro Los Angeles 2028.</p>
+ <p>L'Africa è quasi assente dalla top 20 ad eccezione di <strong>Kenya</strong> e, parzialmente, <strong>Cuba</strong> (nelle Americhe ma con caratteristiche simili agli stati africani in termini di PIL). L'Oceania è rappresentata solo dall'<strong>Australia</strong> (436 medaglie), che ha costruito uno dei sistemi sportivi nazionali più avanzati al mondo con l'Australian Institute of Sport fondato nel 1981.</p>
+ asset: "assets/charts/nb1_top20_storico.json"
+
+- text: |
+ <h3>Focus Italia, costanza con picchi che il PIL non spiega</h3>
+ <p>L'Italia mostra 378 medaglie totali in 15 edizioni, con una media di 25.2 per Olimpiade, un risultato costante ma con oscillazioni significative. Il <strong>picco del 1984</strong> (40 medaglie, 14 ori) è parzialmente spiegato dall'assenza dell'URSS, ma soprattutto da una generazione eccezionale in scherma, tiro, ciclismo e nuoto. Il <strong>picco di Tokyo 2020</strong> (40 medaglie, 10 ori) è invece autentico: nessun boicottaggio, nessun effetto host.</p>
+ <p>Il Tokyo 2020 italiano è il risultato di un cambio di approccio nella preparazione atletica avvenuto negli anni 2010: più attenzione alla psicologia sportiva, migliore integrazione tra federazioni e centri di alto livello, e una generazione di atleti nati nell'era della professionalizzazione dello sport. La correlazione con il PIL pro capite (r = 0.61) è positiva ma non lineare: nei momenti di espansione economica il medagliere cresce, ma i picchi coincidono con fattori non economici.</p>
+ <p>Guardando la composizione per metallo, l'Italia tende ad avere un rapporto ori/totale intorno al 30-35%, con eccezioni verso il basso (bronzi numerosi nelle edizioni difficili) e verso l'alto (1984, dove gli ori erano 14 su 40, il 35%). La qualità del medagliere riflette la profondità del sistema, non solo la quantità.</p>
+ asset: "assets/charts/nb1_italy.json"

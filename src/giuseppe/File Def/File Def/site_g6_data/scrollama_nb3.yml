@@ -1,0 +1,69 @@
+- text: |
+ <h3>Cinque algoritmi a confronto, il salto dai modelli lineari agli ensemble</h3>
+ <p>Prima di scegliere il modello per le previsioni, abbiamo confrontato sistematicamente cinque approcci con cross-validation a 5 fold sul dataset 1968-2016. L'obiettivo è capire non solo quale algoritmo funziona meglio, ma <em>perché</em> funziona meglio, cosa c'è nella relazione economia-medaglie che i modelli lineari non riescono a catturare.</p>
+ <p>OLS baseline, Ridge e Lasso CV si fermano tutti intorno a R² = 0.75. È un risultato già buono, vuol dire che le variabili socioeconomiche spiegano il 73% della varianza delle medaglie. Ma il 27% residuo non è rumore casuale: contiene le interazioni non lineari tra variabili (un paese piccolo ma molto ricco non si comporta come la media suggerisce), gli effetti di soglia (sotto certi livelli di PIL le medaglie sono zero indipendentemente dalla crescita economica), e la storia olimpica cumulata.</p>
+ <p>Gradient Boosting e <strong>Random Forest</strong> catturano queste non-linearità e salgono a R² = 0.78 e 0.75 rispettivamente. Il Random Forest vince perché è più robusto agli outlier (boicottaggi, paesi ospitanti) e non richiede ottimizzazione degli iperparametri critica.</p>
+ asset: "assets/charts/nb3_model_comparison.json"
+
+- text: |
+ <h3>Cosa usa il modello per prevedere, la gerarchia delle feature</h3>
+ <p>La feature importance del Random Forest rivela la gerarchia con cui le variabili contribuiscono alla previsione. In cima con il <strong>46% dell'importanza</strong> stanno le medaglie del ciclo precedente (<code>prev_medaglie</code>), quasi la metà del potere predittivo del modello viene da una sola variabile: il passato olimpico del paese.</p>
+ <p>Questo non è sorprendente se si pensa a come funzionano i sistemi sportivi. Le infrastrutture, i coach, gli atleti in sviluppo, i programmi di identificazione dei talenti, tutto si costruisce su cicli pluriennali. Un paese che aveva un sistema olimpico solido quattro anni fa quasi certamente lo ha ancora oggi, con aggiustamenti marginali. L'inerzia è la caratteristica strutturale dei sistemi sportivi d'élite.</p>
+ <p>Al secondo posto con il 17% c'è il <strong>log(Popolazione)</strong>, che cattura la capacità di selezione degli atleti. Al terzo il <strong>log(PIL totale)</strong> con il 14%. La dummy <strong>host</strong> contribuisce all'8%, statisticamente rilevante ma secondaria rispetto alla storia olimpica. PIL pro capite, aspettativa di vita e urbanizzazione sono marginali insieme, confermando quanto emerso nell'analisi delle correlazioni.</p>
+ asset: "assets/charts/nb3_feature_importance.json"
+
+- text: |
+ <h3>Il modello prevede davvero?, Test su Tokyo 2020</h3>
+ <p>Il test più importante per qualsiasi modello predittivo è quello su dati mai visti. Abbiamo allenato il Random Forest su tutte le edizioni fino al 2016 e poi applicato il modello a Tokyo 2020, un intero ciclo olimpico con 218 paesi che il modello non aveva mai incontrato. Il risultato: <strong>R² = 0.86</strong>, <strong>MAE = 4.2 medaglie</strong>.</p>
+ <p>Lo scatter mostra il confronto tra medaglie reali (asse x) e previste (asse y). La linea tratteggiata è la previsione perfetta. I punti colorati in blu intenso sono paesi che il modello ha sottostimato (reale > previsto), in rosso quelli sovrastimati. Gli outlier principali sono il <strong>Giappone</strong> (57 medaglie reali vs ~35 previste, effetto host non completamente catturato dal modello) e alcuni paesi con breakout improvvisi dovuti a singoli atleti straordinari.</p>
+ <p>Per i grandi paesi, USA (previste 110, reali 113), Cina (previste 85, reali 88), Gran Bretagna (previste 63, reali 65), il modello è molto preciso. Per i paesi con 5-15 medaglie l'errore cresce in proporzione: una singola performance eccezionale può raddoppiare il medagliere. Questa asimmetria è strutturale: i sistemi grandi sono più prevedibili di quelli piccoli.</p>
+ asset: "assets/charts/nb3_predicted_vs_actual.json"
+
+- text: |
+ <h3>Dove sbaglia di più il modello, e perché è inevitabile</h3>
+ <p>Analizzando l'errore medio (MAE) del modello per fascia di medaglie, emerge un pattern chiaro: i paesi con molte medaglie (>30) hanno un errore medio di circa 5-7 medaglie, tollerabile rispetto alla loro scala. I paesi con poche medaglie (1-5) hanno un MAE proporzionalmente più alto.</p>
+ <p>Questo è matematicamente inevitabile. Un paese che vince 3 medaglie può avere un'edizione da 1 o da 5, la variabilità è enorme in proporzione. Un atleta si infortuna, un giudice dà un punteggio controverso, una gara si decide per centesimi di secondo. A questo livello, il modello statistico non può fare meglio dell'incertezza intrinseca della performance umana.</p>
+ <p>Per i paesi nella fascia 16-30 medaglie, quella dove si collocano Italia, Australia, Corea del Sud, Olanda, il MAE è intorno a 5-8 medaglie. È un'incertezza accettabile per la pianificazione sportiva, ma troppo alta per scommettere sul singolo paese. La previsione è più affidabile come stima di un range che come numero puntuale.</p>
+ asset: "assets/charts/nb3_errore_per_fascia.json"
+
+- text: |
+ <h3>L'investimento causa le medaglie?, Difference-in-Differences</h3>
+ <p>Il problema dell'endogeneità è il cuore metodologico dell'analisi causale: i paesi che vincono medaglie ricevono più fondi (causalità inversa), il che potrebbe far sembrare che i fondi producano successo anche quando la direzione causale è opposta. Il <strong>DiD (Difference-in-Differences)</strong> affronta questo problema confrontando il cambiamento delle medaglie tra paesi che hanno cambiato la spesa in modo diverso.</p>
+ <p>Dividendo le 14 nazioni SPLISS in quattro gruppi in base alla variazione di spesa tra Tokyo 2020 e Paris 2024, il pattern è netto: chi ha <strong>tagliato</strong> ha perso in media 8.5 medaglie; chi ha mantenuto stabile ha guadagnato 1.2 medaglie (essenzialmente stabile); chi ha aumentato moderatamente ha guadagnato 5.3 medaglie; chi ha <strong>aumentato fortemente</strong> (oltre il 40%) ha guadagnato 14.2 medaglie. La monotonia del pattern è la firma della causalità: non è casuale che i quattro gruppi si ordinino perfettamente in base alla variazione di spesa.</p>
+ <p>Il caso più robusto in letteratura rimane UK Sport tra Atene 2004 e Pechino 2008: la Gran Bretagna ha triplicato i fondi (+231%) e ha guadagnato +17 medaglie rispetto al trend medio degli altri paesi nello stesso periodo. Questa stima è la più vicina a un effetto causale "puro" ottenibile senza un vero esperimento randomizzato.</p>
+ asset: "assets/charts/nb3_did.json"
+
+- text: |
+ <h3>Quattro profili olimpici, la mappa del mondo sportivo</h3>
+ <p>Applicando KMeans (4 cluster) ai 103 paesi che hanno vinto almeno una medaglia in 60 anni di Olimpiadi estive, emergono quattro profili distinti basati su medaglie medie per edizione, medaglie per milione di abitanti, PIL pro capite, variabilità dei risultati e numero di edizioni partecipate.</p>
+ <p>Le <strong>Potenze assolute</strong> (USA, Cina, URSS/Russia, Germania storica) dominano per massa economica e demografica: medaglie medie superiori a 40 per edizione, bassissima efficienza per abitante, massima consistenza nel tempo. Sono i paesi che il modello lineare prevede meglio proprio perché la loro traiettoria è stabile e prevedibile.</p>
+ <p>Gli <strong>Specializzati</strong> (Giamaica, Cuba, Ungheria, Bahamas) sono il gruppo più interessante dal punto di vista della politica sportiva: mediocri in termini assoluti, eccezionali in termini di efficienza per abitante. Dimostrano che non serve un grande PIL per costruire eccellenza olimpica, serve focalizzare le risorse limitate su poche discipline dove si ha un vantaggio strutturale. Gli <strong>Emergenti/Medi</strong> (GB, Australia, Francia, Corea) sono il gruppo in più rapida evoluzione: sistemi sportivi che crescono sistematicamente grazie a investimenti strutturati. I <strong>Partecipanti</strong> sono la larga maggioranza dei 218 paesi, un potenziale enorme inespresso per mancanza di sistema, non di talento.</p>
+ asset: "assets/charts/nb3_cluster.json"
+
+- text: |
+ <h3>La heatmap dei cluster, cosa distingue davvero i quattro profili</h3>
+ <p>La heatmap mostra i valori normalizzati delle cinque metriche di clustering per ciascun gruppo. I colori più scuri indicano valori più alti della media, i più chiari valori più bassi. La lettura per colonna rivela la "firma" di ogni cluster.</p>
+ <p>Le <strong>Potenze assolute</strong> hanno il punteggio più alto per medaglie medie e consistenza, sono prevedibili e dominanti. Ma hanno punteggio molto basso per medaglie per milione: sono efficienti in assoluto ma non per abitante. Gli <strong>Specializzati</strong> mostrano il pattern opposto: bassissime medaglie medie (quindi non emergono nelle classifiche assolute) ma altissime medaglie per milione, il segnale della specializzazione.</p>
+ <p>Gli <strong>Emergenti/Medi</strong> hanno il profilo più bilanciato: buoni su tutto, eccellenti su nulla. Sono il gruppo più interessante per la politica sportiva perché mostrano che con investimento costante si può scalare la classifica olimpica senza essere una superpotenza. I <strong>Partecipanti</strong> hanno tutti i valori bassi, ma non zero: la maggior parte ha vinto almeno una medaglia nella storia, il che suggerisce che il talento esiste ma il sistema manca.</p>
+ asset: "assets/charts/nb3_cluster_heatmap.json"
+
+- text: |
+ <h3>Previsioni LA 2028 con intervallo di confidenza</h3>
+ <p>Il Random Forest allenato sull'intero dataset 1968-2016 viene applicato con le medaglie di Paris 2024 come <code>prev_medaglie</code>, proiezioni di PIL e popolazione dai trend degli ultimi tre cicli, e la dummy host = 1 per gli USA. Le barre grigie mostrano Paris 2024 (reale), quelle verdi LA 2028 (previsione base). Le linee nere mostrano l'intervallo di confidenza 10-90% basato sulla dispersione dei 300 alberi del modello.</p>
+ <p><strong>USA 100 medaglie</strong>: meno delle 126 di Paris 2024 ma con effetto host stimato di +15 rispetto a quello che avrebbero senza i Giochi in casa. La Cina è prevista stabile a 91, la Gran Bretagna a 66, la Francia in calo da 66 a 62 (effetto post-host). <strong>Italia 39 medaglie</strong>: sostanzialmente stabile rispetto alle 40 di Tokyo 2020, con l'incertezza maggiore legata alle variazioni di roster nelle discipline chiave (scherma, atletica, ciclismo).</p>
+ <p>Gli intervalli di confidenza sono più ampi per i paesi medi: per Olanda, Canada, Sud Corea il range 10-90% è nell'ordine di ±15 medaglie. Per USA e Cina è ±10-12. Questo riflette l'incertezza genuina: conosciamo bene il trend strutturale, ma eventi imprevedibili (infortuni di atleti chiave, cambiamenti di regime di allenamento, emergenti inaspettati) possono spostare il risultato finale in modo significativo.</p>
+ asset: "assets/charts/nb3_predictions_ci.json"
+
+- text: |
+ <h3>Tre scenari per Los Angeles 2028</h3>
+ <p>Per quantificare l'incertezza delle previsioni in modo più intuitivo, abbiamo costruito tre scenari alternativi. Lo <strong>scenario base</strong> usa le assunzioni standard (trend PIL degli ultimi tre cicli, medaglie Paris 2024 come prev_medaglie). Lo <strong>scenario ottimistico</strong> assume crescita economica del 30% superiore al trend e medaglie di partenza del 5% più alte. Lo <strong>scenario pessimistico</strong> assume crescita del 30% inferiore e medaglie di partenza del 5% più basse.</p>
+ <p>Per la maggior parte dei paesi, la differenza tra scenario ottimistico e pessimistico è nell'ordine di 8-15 medaglie, significativa ma non enorme. Questo suggerisce che il modello è relativamente robusto alle variazioni nelle assunzioni economiche: la storia olimpica (prev_medaglie) domina così tanto la previsione che variazioni moderate nel PIL non cambiano radicalmente il risultato.</p>
+ <p>L'eccezione è il <strong>Giappone</strong>: lo scenario ottimistico prevede fino a 50 medaglie, quello pessimistico scende a 35. La distanza riflette l'incertezza su quanto durerà il boost costruito per Tokyo 2020, il paese ha investito moltissimo e ora deve decidere se mantenere quei livelli o ridimensionare.</p>
+ asset: "assets/charts/nb3_scenario_2028.json"
+
+- text: |
+ <h3>Focus Italia a Los Angeles, profilo dettagliato</h3>
+ <p>Guardando il profilo dell'Italia nel tempo, il colore delle barre indica il numero di ori: più dorata la barra, più ori quella edizione. La linea rossa mostra la percentuale di ori sul totale. Il pattern rivela un sistema sportivo di qualità: il rapporto ori/totale si mantiene intorno al 28-35%, con oscillazioni legate alla presenza o assenza di discipline tradizionalmente italiane nelle categorie olimpiche.</p>
+ <p>La previsione per LA 2028 è di circa <strong>39 medaglie</strong> nello scenario base, con un range ottimistico che può arrivare a 44 e uno pessimistico che scende a 34. L'Italia si trova in una posizione interessante: il sistema dello sport italiano è solido e produce risultati costanti, ma non ha (ancora) un programma di investimento sistematico paragonabile a UK Sport o al modello australiano. La domanda per il futuro è se Tokyo 2020 sia stato un picco isolato o l'inizio di un nuovo livello strutturale.</p>
+ <p>Le discipline chiave per LA 2028 saranno le stesse di sempre, <strong>scherma</strong> (tradizionalmente il pilastro del medagliere italiano), <strong>atletica</strong> (Marcell Jacobs e il relativo in evoluzione), <strong>ciclismo</strong> e <strong>sport acquatici</strong>. Il rischio è il ricambio generazionale: molti atleti di Tokyo 2020 avranno 30+ anni nel 2028 e sarà cruciale che il sistema produca una nuova generazione altrettanto forte.</p>
+ asset: "assets/charts/nb3_italia_dettaglio.json"
